@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CrawlingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,11 @@ Route::prefix('clients')
         Route::get('/{client}', [ClientController::class, 'show'])->name('show');
         Route::put('/{client}', [ClientController::class, 'update'])->name('update');
         Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+
+    });
+
+Route::prefix('crawling')
+    ->name('crawling.')
+    ->group(function () {
+        Route::post('/', [CrawlingController::class, 'store'])->name('store');
     });
