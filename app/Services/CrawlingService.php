@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Client;
 use App\Models\Request;
 use App\Services\UserAgent\UserAgentService;
+use Illuminate\Support\Collection;
 
 class CrawlingService
 {
@@ -15,7 +17,7 @@ class CrawlingService
             [
                 'User-Agent' => app(UserAgentService::class)->random([
                     'device_type' => 'Desktop',
-                ])
+                ])['agent_string']
             ]);
 
         $data['requestOptions'] = $requestOptions;
@@ -32,5 +34,12 @@ class CrawlingService
         );
 
         return Request::create($data);
+    }
+
+    public function getDefaultCrawlingRequests(): Collection
+    {
+        return Request::where([
+            'state_code' => 'init',
+        ])->whereNull('client_uuid')->limit(Client::count() * 2)->get();
     }
 }

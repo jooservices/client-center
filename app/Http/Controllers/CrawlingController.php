@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCrawlingRequest;
 use App\Http\Resources\RequestResource;
-use App\Models\Request;
 use App\Services\CrawlingService;
 use Illuminate\Http\JsonResponse;
 

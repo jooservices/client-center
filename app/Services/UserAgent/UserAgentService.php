@@ -51,6 +51,10 @@ class UserAgentService
     {
         $filtered = $this->filter($filterBy);
 
+        if (empty($filtered)) {
+            throw new Exception('No user agents found for the given filter');
+        }
+
         return $filtered[array_rand($filtered)];
     }
 
