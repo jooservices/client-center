@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Models\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Client extends Model
 {
+    use HasFactory;
     use HasUuid;
 
     protected $connection = 'mongodb';
@@ -15,18 +17,18 @@ class Client extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'ip',
         'description',
-        'max_workers',
+        'queues', // 'queues' => [ 'name' => 'string', 'workers' => 'integer' ]
+        'ip',
         'state_code',
     ];
 
     protected $casts = [
         'uuid' => 'string',
         'name' => 'string',
-        'ip' => 'string',
         'description' => 'string',
-        'max_workers' => 'integer',
+        'queues' => 'array',
+        'ip' => 'string',
         'state_code' => 'string',
     ];
 }

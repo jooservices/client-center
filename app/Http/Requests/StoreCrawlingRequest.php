@@ -26,9 +26,7 @@ class StoreCrawlingRequest extends FormRequest
             'url' => 'required|url',
             'requestOptions' => 'nullable|array',
             'options' => 'nullable|array',
-            'response' => 'nullable|string',
-            'state_code' => 'nullable|string',
-            'responded_at' => 'nullable|datetime',
+            'service' => 'required|string'
         ];
     }
 }

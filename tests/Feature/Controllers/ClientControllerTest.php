@@ -11,14 +11,19 @@ class ClientControllerTest extends TestCase
         $response = $this->postJson('/api/clients', [
             'name' => $this->faker->text,
             'description' => $this->faker->text,
-            'max_workers' => $this->faker->numberBetween(1, 10),
+            'queues' => [
+                [
+                    'name' => $this->faker->text,
+                    'workers' => $this->faker->numberBetween()
+                ]
+            ],
+            'ip' => $this->faker->ipv4,
         ])
             ->assertStatus(201)
             ->assertJsonStructure([
                 'uuid',
                 'name',
-                'description',
-                'max_workers',
+                'queues',
             ])->getContent();
 
         $response = json_decode($response, true);
@@ -27,7 +32,6 @@ class ClientControllerTest extends TestCase
             'uuid' => $response['uuid'],
             'name' => $response['name'],
             'description' => $response['description'],
-            'max_workers' => $response['max_workers'],
             'state_code' => $response['state_code'],
         ], 'mongodb');
     }
@@ -37,14 +41,19 @@ class ClientControllerTest extends TestCase
         $response = $this->postJson('/api/clients', [
             'name' => $this->faker->text,
             'description' => $this->faker->text,
-            'max_workers' => $this->faker->numberBetween(1, 10),
+            'queues' => [
+                [
+                    'name' => $this->faker->text,
+                    'workers' => $this->faker->numberBetween()
+                ]
+            ],
+            'ip' => $this->faker->ipv4,
         ])
             ->assertStatus(201)
             ->assertJsonStructure([
                 'uuid',
                 'name',
-                'description',
-                'max_workers',
+                'queues',
             ])->getContent();
 
         $response = json_decode($response, true);
@@ -56,8 +65,7 @@ class ClientControllerTest extends TestCase
             ->assertJsonStructure([
                 'uuid',
                 'name',
-                'description',
-                'max_workers',
+                'queues',
             ])->getContent();
 
         $response = json_decode($response, true);
@@ -68,7 +76,6 @@ class ClientControllerTest extends TestCase
             'uuid' => $response['uuid'],
             'name' => $response['name'],
             'description' => $response['description'],
-            'max_workers' => $response['max_workers'],
             'state_code' => $response['state_code'],
         ], 'mongodb');
     }

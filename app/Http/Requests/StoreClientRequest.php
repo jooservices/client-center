@@ -24,7 +24,10 @@ class StoreClientRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
-            'max_workers' => 'required|integer|min:1',
+            'queues' => 'required|array',
+            'queues.*.name' => 'required|string|max:255',
+            'queues.*.workers' => 'required|int',
+            'ip' => 'required|ip',
         ];
     }
 }

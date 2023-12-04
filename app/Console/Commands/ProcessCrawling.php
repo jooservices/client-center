@@ -29,10 +29,8 @@ class ProcessCrawling extends Command
     {
         $service = app(CrawlingService::class);
         $service->getDefaultCrawlingRequests()->each(function ($request) {
-            $request->update([
-                'state_code' => 'processing',
-            ]);
-            DefaultCrawling::dispatch($request);
+            $request->update(['state_code' => 'processing',]);
+            DefaultCrawling::dispatch($request)->onQueue($request->service);
         });
     }
 }

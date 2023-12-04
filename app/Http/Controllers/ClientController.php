@@ -9,6 +9,9 @@ use App\Models\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
+/**
+ * Register client
+ */
 class ClientController extends Controller
 {
     /**

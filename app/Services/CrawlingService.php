@@ -38,8 +38,23 @@ class CrawlingService
 
     public function getDefaultCrawlingRequests(): Collection
     {
-        return Request::where([
-            'state_code' => 'init',
-        ])->whereNull('client_uuid')->limit(Client::count() * 2)->get();
+        $clients = Client::where('state_code', 'active')->get();
+        $queues= [];
+        $clients->each(function ($client) use (&$queues) {
+            foreach ($client->queues as $queue) {
+                $queues[$queue['name']] = $queues[$queue['name']] ?? 0;
+                $queues[$queue['name']] += $queue['workers'];
+            }
+        });
+
+        foreach ($queues as $service => $workers)
+        {
+            $queues[$service] = Request::where('service', $service)
+                ->where('state_code', 'init')
+                ->limit($workers)
+                ->get();
+        }
+
+        return collect($queues);
     }
 }

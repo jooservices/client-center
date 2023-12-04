@@ -9,13 +9,15 @@ class CrawlingControllerTest extends TestCase
     public function testRegisterCrawling()
     {
         $response = $this->postJson('/api/crawling', [
-            'url' => 'https://www.google.com'
+            'url' => 'https://www.google.com',
+            'service' => 'google',
         ])->assertStatus(201)
             ->assertJsonStructure([
                 'uuid',
                 'url',
                 'requestOptions',
                 'options',
+                'service',
                 'state_code',
             ])->getContent();
 
